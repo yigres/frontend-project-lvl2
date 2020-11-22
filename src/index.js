@@ -35,6 +35,7 @@ const gendiff = (filepath1, filepath2) => {
   } catch (e) {
     console.log('что-то пошло не так!');
   }
+  return -1;
 };
 
 export default gendiff;
