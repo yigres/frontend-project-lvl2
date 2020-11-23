@@ -10,7 +10,6 @@ const gendiff = (filepath1, filepath2) => {
     const object2 = JSON.parse(fs.readFileSync(path2, 'utf-8'));
     const keys1 = Object.keys(object1);
     const keys2 = Object.keys(object2);
-
     const diff = `{\n${keys1.reduce((acc, key) => {
       // ключа нет во втором файле
       if (_.findIndex(keys2, (el) => el === key) === (-1)) {
@@ -29,8 +28,6 @@ const gendiff = (filepath1, filepath2) => {
       }
       return acc;
     }, '')}}\n`;
-
-    // console.log(diff);
     return diff;
   } catch (e) {
     console.log('что-то пошло не так!');
