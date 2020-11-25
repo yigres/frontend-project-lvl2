@@ -1,5 +1,7 @@
 #!/usr/bin/env node
+
 import program from 'commander';
+import path from 'path';
 import gendiff from '../index';
 
 program
@@ -7,8 +9,10 @@ program
   .description('Compares two configuration files and shows a difference.')
   .arguments('<filepath1> <filepath2>')
   .option('-f, --format [type]', 'output format')
-  .action((filepath1, filepath2) => {
-    gendiff(filepath1, filepath2);
+  .action((filePath1, filePath2) => {
+    const fullPath1 = path.resolve(process.cwd(), filePath1);
+    const fullPath2 = path.resolve(process.cwd(), filePath2);
+    gendiff(fullPath1, fullPath2);
   });
 
 program.parse(process.argv);
