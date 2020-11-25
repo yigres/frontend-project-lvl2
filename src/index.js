@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import getObject from './parsers';
+import getObject from './parsers.js';
 
 const getDiff = (object1, object2) => {
   const keys1 = Object.keys(object1);

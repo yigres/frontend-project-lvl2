@@ -2,7 +2,7 @@
 
 import program from 'commander';
 import path from 'path';
-import gendiff from '../index';
+import gendiff from '../index.js';
 
 program
   .version('1.1.1')
@@ -12,7 +12,7 @@ program
   .action((filePath1, filePath2) => {
     const fullPath1 = path.resolve(process.cwd(), filePath1);
     const fullPath2 = path.resolve(process.cwd(), filePath2);
-    gendiff(fullPath1, fullPath2);
+    console.log(gendiff(fullPath1, fullPath2));
   });
 
 program.parse(process.argv);
