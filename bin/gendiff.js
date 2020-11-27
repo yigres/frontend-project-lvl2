@@ -3,6 +3,7 @@
 import program from 'commander';
 import path from 'path';
 import gendiff from '../index.js';
+import format from '../src/formatdiff.js';
 
 program
   .version('1.1.1')
@@ -12,7 +13,7 @@ program
   .action((filePath1, filePath2) => {
     const fullPath1 = path.resolve(process.cwd(), filePath1);
     const fullPath2 = path.resolve(process.cwd(), filePath2);
-    console.log(gendiff(fullPath1, fullPath2));
+    console.log(format(gendiff(fullPath1, fullPath2)));
   });
 
 program.parse(process.argv);
