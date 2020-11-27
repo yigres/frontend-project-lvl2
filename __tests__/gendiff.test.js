@@ -20,9 +20,9 @@ const path2 = getFixturePath('file2.json');
 const path3 = getFixturePath('file3.yml');
 const path4 = getFixturePath('file4.yml');
 
-// test('generate difference for two json files', () => {
-//   expect(gendiff(path1, path2)).toEqual(expectedResult());
-// });
+test('generate difference for two json files', () => {
+  expect(gendiff(path1, path2)).toEqual(expectedResult());
+});
 
 test('generate difference for two yaml files', () => {
   expect(gendiff(path3, path4)).toEqual(expectedResult());
