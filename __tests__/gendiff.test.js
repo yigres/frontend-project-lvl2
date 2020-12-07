@@ -1,33 +1,24 @@
 import { test, expect } from '@jest/globals';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
-import fs from 'fs';
-import gendiff from '../index.js';
+import gendiff from '../src/index.js';
+import stylish from '../src/stylish.js';
+import expected from '../__fixtures__/expected_file2.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
-const expectedResult = () => JSON.parse(fs.readFileSync(getFixturePath('expected_file.json')));
 
-//   const result = `{${Object.entries(JSON.parse(readJsonFile)).reduce((acc,
-//   [a, b]) => `${acc}\n${a}: ${b}`, '')}\n}`;
-//   return result;
-// };
+const path5 = getFixturePath('file5.json');
+const path6 = getFixturePath('file6.json');
+const path7 = getFixturePath('file7.yml');
+const path8 = getFixturePath('file8.yml');
 
-const path1 = getFixturePath('file1.json');
-const path2 = getFixturePath('file2.json');
-const path3 = getFixturePath('file3.yml');
-const path4 = getFixturePath('file4.yml');
-
-test('generate difference for two json files', () => {
-  expect(gendiff(path1, path2)).toEqual(expectedResult());
+test('generate difference for two deep json files', () => {
+  expect(stylish(gendiff(path5, path6))).toBe(expected);
 });
 
-test('generate difference for two yaml files', () => {
-  expect(gendiff(path3, path4)).toEqual(expectedResult());
+test('generate difference for two deep yml files', () => {
+  expect(stylish(gendiff(path7, path8))).toBe(expected);
 });
-
-// test('generate difference for two deep files', () => {
-//   expect(gendiff(path5, path6)).toBe(expectedString());
-// });

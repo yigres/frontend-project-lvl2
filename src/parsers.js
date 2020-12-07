@@ -12,6 +12,6 @@ export default (fullPathFile) => {
   } else if (format === '.json') {
     result = JSON.parse(data);
   }
-  // console.log(result, '!!!', format);
+
   return result;
 };
