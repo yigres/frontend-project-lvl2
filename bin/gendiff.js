@@ -1,9 +1,7 @@
 #!/usr/bin/env node
-
 import program from 'commander';
 import path from 'path';
 import gendiff from '../index.js';
-import stylish from '../src/stylish.js';
 
 program
   .version('1.1.1')
@@ -13,18 +11,8 @@ program
   .action((filePath1, filePath2) => {
     const fullPath1 = path.resolve(process.cwd(), filePath1);
     const fullPath2 = path.resolve(process.cwd(), filePath2);
-    console.log('- %s output format', program.format);
-    if (program.format === 'stylish') {
-      const ast = gendiff(fullPath1, fullPath2);
-      console.log(stylish(ast));
-    } else {
-      console.log('wrong format!!!');
-    }
-    // console.log('!ast ===');
-    // console.log(ast);
-    // console.log(format(ast));
+    // console.log('- %s output format', program.format);
+    console.log(gendiff(fullPath1, fullPath2, program.format));
   });
 
 program.parse(process.argv);
-
-export default gendiff;

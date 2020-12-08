@@ -9,19 +9,19 @@ const formatValue = (value, level) => {
   return value;
 };
 
-const iterAst = (ast, level = 0) => {
+const iterAst = (ast, depth = 0) => {
   const useStatusKey = (key) => {
     switch (ast[key].status) {
       case 'equal':
-        return `${spaces(level)}  ${key}: ${formatValue(ast[key].oldValue, level)}`.trimRight();
+        return `${spaces(depth)}  ${key}: ${formatValue(ast[key].oldValue, depth)}`.trimRight();
       case 'added':
-        return `${spaces(level)}+ ${key}: ${formatValue(ast[key].newValue, level)}`.trimRight();
-      case 'deleted':
-        return `${spaces(level)}- ${key}: ${formatValue(ast[key].oldValue, level)}`.trimRight();
-      case 'changed':
+        return `${spaces(depth)}+ ${key}: ${formatValue(ast[key].newValue, depth)}`.trimRight();
+      case 'removed':
+        return `${spaces(depth)}- ${key}: ${formatValue(ast[key].oldValue, depth)}`.trimRight();
+      case 'updated':
         return [
-          `${spaces(level)}- ${key}: ${formatValue(ast[key].oldValue, level)}`.trimRight(),
-          `\n${spaces(level)}+ ${key}: ${formatValue(ast[key].newValue, level)}`.trimRight(),
+          `${spaces(depth)}- ${key}: ${formatValue(ast[key].oldValue, depth)}`.trimRight(),
+          `\n${spaces(depth)}+ ${key}: ${formatValue(ast[key].newValue, depth)}`.trimRight(),
         ].join('');
       default:
         // nothing
@@ -32,13 +32,13 @@ const iterAst = (ast, level = 0) => {
   const res = keys.map((key) => {
     // eslint-disable-next-line no-prototype-builtins
     if (!ast[key].hasOwnProperty('status')) {
-      return `${spaces(level)}  ${key}: ${iterAst(ast[key], level + 1)}`;
+      return `${spaces(depth)}  ${key}: ${iterAst(ast[key], depth + 1)}`;
     }
 
     return useStatusKey(key);
   }).join('\n');
 
-  return `{\n${res}\n${' '.repeat(level * 4)}}`;
+  return `{\n${res}\n${' '.repeat(depth * 4)}}`;
 };
 
 export default iterAst;
