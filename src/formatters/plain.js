@@ -1,5 +1,3 @@
-// const { values } = require("lodash");
-
 const iterAst = (ast, path = '') => {
   const formatValue = (value) => {
     if (value instanceof Object) {

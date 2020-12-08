@@ -1,10 +1,5 @@
 import _ from 'lodash';
-// import program from 'commander';
-// import path from 'path';
 import getObject from './parsers.js';
-// import gendiff from '../index.js';
-// import stylish from './formatters/stylish.js';
-// import plain from './formatters/plain.js';
 import format from './formatters/index.js';
 
 const isOject = (obj) => obj && (typeof obj === 'object') && !Array.isArray(obj);

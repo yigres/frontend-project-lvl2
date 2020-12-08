@@ -11,6 +11,8 @@
 [![asciicast](https://asciinema.org/a/377800.svg)](https://asciinema.org/a/377800)
 
 [![asciicast](https://asciinema.org/a/377978.svg)](https://asciinema.org/a/377978)
+
+[![asciicast](https://asciinema.org/a/378059.svg)](https://asciinema.org/a/378059)
 ***
 Setup       
 `$ make install`        

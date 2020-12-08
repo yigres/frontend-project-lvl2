@@ -2,9 +2,11 @@ import { test, expect } from '@jest/globals';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import gendiff from '../src/index.js';
+import expected from '../__fixtures__/expected_file.js';
 import expected1 from '../__fixtures__/expected_file1.js';
 import expected2 from '../__fixtures__/expected_file2.js';
-import expected from '../__fixtures__/expected_file.js';
+import expected3 from '../__fixtures__/expected_file3.js';
+import expected4 from '../__fixtures__/expected_file4.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -36,4 +38,16 @@ test('generate "plain" format difference for two deep jsom files', () => {
 
 test('generate "plain" format difference for two deep yml files', () => {
   expect(gendiff(path7, path8, 'plain')).toBe(expected2);
+});
+
+test('generate "json" format difference for two plain jsom files', () => {
+  expect(gendiff(path1, path2, 'json')).toBe(expected4);
+});
+
+test('generate "json" format difference for two deep jsom files', () => {
+  expect(gendiff(path5, path6, 'json')).toBe(expected3);
+});
+
+test('generate "json" format difference for two deep yml files', () => {
+  expect(gendiff(path7, path8, 'json')).toBe(expected3);
 });
