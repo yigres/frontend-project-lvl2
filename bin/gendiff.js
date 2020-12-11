@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 import program from 'commander';
-import path from 'path';
 import gendiff from '../index.js';
 
 program
@@ -9,10 +8,7 @@ program
   .arguments('<filepath1> <filepath2>')
   .option('-f, --format [type]', 'output format', 'stylish')
   .action((filePath1, filePath2) => {
-    const fullPath1 = path.resolve(process.cwd(), filePath1);
-    const fullPath2 = path.resolve(process.cwd(), filePath2);
-    // console.log('- %s output format', program.format);
-    console.log(gendiff(fullPath1, fullPath2, program.format));
+    console.log(gendiff(filePath1, filePath2, program.format));
   });
 
 program.parse(process.argv);
