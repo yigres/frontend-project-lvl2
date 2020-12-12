@@ -1,6 +1,6 @@
 {
   "name": "@hexlet/code",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "![Actions Status](/workflows/hexlet-check/badge.svg)",
   "bin": {
     "gendiff": "bin/gendiff.js"
