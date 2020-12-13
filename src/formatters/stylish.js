@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const spaces = (count) => ' '.repeat(count * 4 + 2);
 
 const formatValue = (value, level) => {
@@ -10,32 +12,31 @@ const formatValue = (value, level) => {
 };
 
 const iterAst = (ast, depth = 0) => {
-  const useStatusKey = (key) => {
-    switch (ast[key].status) {
+  const parse = (node) => {
+    switch (node.type) {
       case 'equal':
-        return `${spaces(depth)}  ${key}: ${formatValue(ast[key].oldValue, depth)}`.trimRight();
+        return `${spaces(depth)}  ${node.name}: ${formatValue(node.oldValue, depth)}`.trimRight();
       case 'added':
-        return `${spaces(depth)}+ ${key}: ${formatValue(ast[key].newValue, depth)}`.trimRight();
+        return `${spaces(depth)}+ ${node.name}: ${formatValue(node.newValue, depth)}`.trimRight();
       case 'removed':
-        return `${spaces(depth)}- ${key}: ${formatValue(ast[key].oldValue, depth)}`.trimRight();
+        return `${spaces(depth)}- ${node.name}: ${formatValue(node.oldValue, depth)}`.trimRight();
       case 'updated':
         return [
-          `${spaces(depth)}- ${key}: ${formatValue(ast[key].oldValue, depth)}`.trimRight(),
-          `\n${spaces(depth)}+ ${key}: ${formatValue(ast[key].newValue, depth)}`.trimRight(),
+          `${spaces(depth)}- ${node.name}: ${formatValue(node.oldValue, depth)}`.trimRight(),
+          `\n${spaces(depth)}+ ${node.name}: ${formatValue(node.newValue, depth)}`.trimRight(),
         ].join('');
       default:
         // nothing
     }
     return -1;
   };
-  const keys = Object.keys(ast).sort();
-  const res = keys.map((key) => {
-    // eslint-disable-next-line no-prototype-builtins
-    if (!ast[key].hasOwnProperty('status')) {
-      return `${spaces(depth)}  ${key}: ${iterAst(ast[key], depth + 1)}`;
+
+  const res = ast.map((node) => {
+    if (_.has(node, 'children')) {
+      return `${spaces(depth)}  ${node.name}: ${iterAst(node.children, depth + 1)}`;
     }
 
-    return useStatusKey(key);
+    return parse(node);
   }).join('\n');
 
   return `{\n${res}\n${' '.repeat(depth * 4)}}`;

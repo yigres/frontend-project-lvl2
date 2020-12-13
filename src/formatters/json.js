@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const formatValue = (value) => {
   if (value instanceof Object) {
     const res = Object.keys(value).map((key) => `"${key}":${formatValue(value[key])}`).join(',');
@@ -7,32 +9,31 @@ const formatValue = (value) => {
 };
 
 const iterAst = (ast) => {
-  const useStatusKey = (key) => {
-    switch (ast[key].status) {
+  const render = (node) => {
+    switch (node.type) {
       case 'equal':
-        return `"${key}":${formatValue(ast[key].oldValue)}`.trimRight();
+        return `"${node.name}":${formatValue(node.oldValue)}`.trimRight();
       case 'added':
-        return `"+ ${key}":${formatValue(ast[key].newValue)}`.trimRight();
+        return `"+ ${node.name}":${formatValue(node.newValue)}`.trimRight();
       case 'removed':
-        return `"- ${key}":${formatValue(ast[key].oldValue)}`.trimRight();
+        return `"- ${node.name}":${formatValue(node.oldValue)}`.trimRight();
       case 'updated':
         return [
-          `"- ${key}":${formatValue(ast[key].oldValue)},`.trimRight(),
-          `"+ ${key}":${formatValue(ast[key].newValue)}`.trimRight(),
+          `"- ${node.name}":${formatValue(node.oldValue)},`.trimRight(),
+          `"+ ${node.name}":${formatValue(node.newValue)}`.trimRight(),
         ].join('');
       default:
         // nothing
     }
     return -1;
   };
-  const keys = Object.keys(ast).sort();
-  const res = keys.map((key) => {
-    // eslint-disable-next-line no-prototype-builtins
-    if (!ast[key].hasOwnProperty('status')) {
-      return `"${key}":${iterAst(ast[key])}`;
+
+  const res = ast.map((node) => {
+    if (_.has(node, 'children')) {
+      return `"${node.name}":${iterAst(node.children)}`;
     }
 
-    return useStatusKey(key);
+    return render(node);
   }).join(',');
   return `{${res}}`;
 };

@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const iterAst = (ast, path = '') => {
   const formatValue = (value) => {
     if (value instanceof Object) {
@@ -6,31 +8,30 @@ const iterAst = (ast, path = '') => {
     return (typeof (value) === 'string' ? `'${value}'` : value);
   };
 
-  const newPath = (key) => (path === ''
-    ? key
-    : `${path}.${key}`);
+  const newPath = (value) => (path === ''
+    ? value
+    : `${path}.${value}`);
 
-  const useStatusKey = (key) => {
-    switch (ast[key].status) {
+  const parse = (node) => {
+    switch (node.type) {
       case 'added':
-        return `Property '${newPath(key)}' was added with value: ${formatValue(ast[key].newValue)}`;
+        return `Property '${newPath(node.name)}' was added with value: ${formatValue(node.newValue)}`;
       case 'removed':
-        return `Property '${newPath(key)}' was removed`;
+        return `Property '${newPath(node.name)}' was removed`;
       case 'updated':
-        return `Property '${newPath(key)}' was updated. From ${formatValue(ast[key].oldValue)} to ${formatValue(ast[key].newValue)}`;
+        return `Property '${newPath(node.name)}' was updated. From ${formatValue(node.oldValue)} to ${formatValue(node.newValue)}`;
       default:
         // nothing
     }
     return null;
   };
-  const keys = Object.keys(ast).sort();
-  const res = keys.map((key) => {
-    // eslint-disable-next-line no-prototype-builtins
-    if (!ast[key].hasOwnProperty('status')) {
-      return iterAst(ast[key], newPath(key));
+
+  const res = ast.map((node) => {
+    if (_.has(node, 'children')) {
+      return iterAst(node.children, newPath(node.name));
     }
 
-    return useStatusKey(key);
+    return parse(node);
   }).filter(Boolean).join('\n');
 
   return res;
