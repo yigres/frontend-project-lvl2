@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 const iterAst = (ast, path = '') => {
   const formatValue = (value) => {
     if (value instanceof Object) {
@@ -12,8 +10,10 @@ const iterAst = (ast, path = '') => {
     ? value
     : `${path}.${value}`);
 
-  const parse = (node) => {
+  const render = (node) => {
     switch (node.type) {
+      case 'equal':
+        return '';
       case 'added':
         return `Property '${newPath(node.name)}' was added with value: ${formatValue(node.newValue)}`;
       case 'removed':
@@ -21,17 +21,16 @@ const iterAst = (ast, path = '') => {
       case 'updated':
         return `Property '${newPath(node.name)}' was updated. From ${formatValue(node.oldValue)} to ${formatValue(node.newValue)}`;
       default:
-        // nothing
+        throw new Error(`Unkown node type: '${node.type}'`);
     }
-    return null;
   };
 
   const res = ast.map((node) => {
-    if (_.has(node, 'children')) {
+    if (node.type === 'node') {
       return iterAst(node.children, newPath(node.name));
     }
 
-    return parse(node);
+    return render(node);
   }).filter(Boolean).join('\n');
 
   return res;

@@ -18,11 +18,11 @@ const makeAst = (object1, object2) => {
     if (_.isPlainObject(object1[key]) && _.isPlainObject(object2[key])) {
       return {
         name: key,
+        type: 'node',
         children: makeAst(object1[key], object2[key]),
       };
     }
     if (_.isEqual(object1[key], object2[key])) {
-      // значение ключа совпадают в обих файлах
       return {
         name: key,
         type: 'equal',
@@ -31,7 +31,6 @@ const makeAst = (object1, object2) => {
       };
     }
     if (!_.has(object2, key)) {
-      // ключа нет во втором файле
       return {
         name: key,
         type: 'removed',
@@ -40,7 +39,6 @@ const makeAst = (object1, object2) => {
       };
     }
     if (!_.has(object1, key)) {
-      // ключа нет в первом файле
       return {
         name: key,
         type: 'added',
@@ -48,7 +46,6 @@ const makeAst = (object1, object2) => {
         newValue: object2[key],
       };
     }
-    // значеие ключа отличается в файлах
     return {
       name: key,
       type: 'updated',

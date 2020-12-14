@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 const spaces = (count) => ' '.repeat(count * 4 + 2);
 
 const formatValue = (value, level) => {
@@ -12,7 +10,7 @@ const formatValue = (value, level) => {
 };
 
 const iterAst = (ast, depth = 0) => {
-  const parse = (node) => {
+  const render = (node) => {
     switch (node.type) {
       case 'equal':
         return `${spaces(depth)}  ${node.name}: ${formatValue(node.oldValue, depth)}`.trimRight();
@@ -26,17 +24,16 @@ const iterAst = (ast, depth = 0) => {
           `\n${spaces(depth)}+ ${node.name}: ${formatValue(node.newValue, depth)}`.trimRight(),
         ].join('');
       default:
-        // nothing
+        throw new Error(`Unkown node type: '${node.type}'`);
     }
-    return -1;
   };
 
   const res = ast.map((node) => {
-    if (_.has(node, 'children')) {
+    if (node.type === 'node') {
       return `${spaces(depth)}  ${node.name}: ${iterAst(node.children, depth + 1)}`;
     }
 
-    return parse(node);
+    return render(node);
   }).join('\n');
 
   return `{\n${res}\n${' '.repeat(depth * 4)}}`;

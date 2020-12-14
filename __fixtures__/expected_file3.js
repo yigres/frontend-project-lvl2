@@ -1,8 +1,3 @@
-const expected = '{"common":{"+ follow":false,"setting1":"Value 1",'
-+ '"- setting2":200,"- setting3":true,"+ setting3":null,"+ setting4":"blah blah",'
-+ '"+ setting5":{"key5":"value5"},"setting6":{"doge":{"- wow":"","+ wow":"so much"},'
-+ '"key":"value","+ ops":"vops"}},"group1":{"- baz":"bas","+ baz":"bars","foo":"bar",'
-+ '"- nest":{"key":"value"},"+ nest":"str"},"- group2":{"abc":12345,"deep":{"id":45}},'
-+ '"+ group3":{"fee":100500,"deep":{"id":{"number":45}}}}';
+const expected = '[{"name":"common","type":"node","children":[{"name":"follow","type":"added","oldValue":"","newValue":false},{"name":"setting1","type":"equal","oldValue":"Value 1","newValue":"Value 1"},{"name":"setting2","type":"removed","oldValue":200,"newValue":""},{"name":"setting3","type":"updated","oldValue":true,"newValue":null},{"name":"setting4","type":"added","oldValue":"","newValue":"blah blah"},{"name":"setting5","type":"added","oldValue":"","newValue":{"key5":"value5"}},{"name":"setting6","type":"node","children":[{"name":"doge","type":"node","children":[{"name":"wow","type":"updated","oldValue":"","newValue":"so much"}]},{"name":"key","type":"equal","oldValue":"value","newValue":"value"},{"name":"ops","type":"added","oldValue":"","newValue":"vops"}]}]},{"name":"group1","type":"node","children":[{"name":"baz","type":"updated","oldValue":"bas","newValue":"bars"},{"name":"foo","type":"equal","oldValue":"bar","newValue":"bar"},{"name":"nest","type":"updated","oldValue":{"key":"value"},"newValue":"str"}]},{"name":"group2","type":"removed","oldValue":{"abc":12345,"deep":{"id":45}},"newValue":""},{"name":"group3","type":"added","oldValue":"","newValue":{"fee":100500,"deep":{"id":{"number":45}}}}]';
 
 export default expected;
