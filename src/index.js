@@ -12,7 +12,7 @@ const mapping = {
 const parse = (data, fileFormat) => mapping[fileFormat](data);
 
 const makeAst = (object1, object2) => {
-  const keys = _.union(_.keys(object1), _.keys(object2)).sort();
+  const keys = _.sortBy(_.union(_.keys(object1), _.keys(object2)));
 
   return keys.map((key) => {
     if (_.isPlainObject(object1[key]) && _.isPlainObject(object2[key])) {
