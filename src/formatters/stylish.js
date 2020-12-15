@@ -1,9 +1,9 @@
-const spaces = (count) => ' '.repeat(count * 4 + 2);
+const spaces = (count = 0) => ' '.repeat(count * 4 + 2);
 
-const formatValue = (value, level) => {
+const renderValue = (value, depth) => {
   if (value instanceof Object) {
-    const res = Object.keys(value).map((key) => `\n${spaces(level + 1)}  ${key}: ${formatValue(value[key], level + 1)}`).join('');
-    return `{${res}\n${' '.repeat((level + 1) * 4)}}`;
+    const res = Object.keys(value).map((key) => `\n${spaces(depth + 1)}  ${key}: ${renderValue(value[key], depth + 1)}`).join('');
+    return `{${res}\n${' '.repeat((depth + 1) * 4)}}`;
   }
 
   return value;
@@ -13,15 +13,15 @@ const iterAst = (ast, depth = 0) => {
   const render = (node) => {
     switch (node.type) {
       case 'equal':
-        return `${spaces(depth)}  ${node.name}: ${formatValue(node.oldValue, depth)}`.trimRight();
+        return `${spaces(depth)}  ${node.name}: ${renderValue(node.value, depth)}`.trimRight();
       case 'added':
-        return `${spaces(depth)}+ ${node.name}: ${formatValue(node.newValue, depth)}`.trimRight();
+        return `${spaces(depth)}+ ${node.name}: ${renderValue(node.value, depth)}`.trimRight();
       case 'removed':
-        return `${spaces(depth)}- ${node.name}: ${formatValue(node.oldValue, depth)}`.trimRight();
+        return `${spaces(depth)}- ${node.name}: ${renderValue(node.value, depth)}`.trimRight();
       case 'updated':
         return [
-          `${spaces(depth)}- ${node.name}: ${formatValue(node.oldValue, depth)}`.trimRight(),
-          `\n${spaces(depth)}+ ${node.name}: ${formatValue(node.newValue, depth)}`.trimRight(),
+          `${spaces(depth)}- ${node.name}: ${renderValue(node.oldValue, depth)}`.trimRight(),
+          `\n${spaces(depth)}+ ${node.name}: ${renderValue(node.newValue, depth)}`.trimRight(),
         ].join('');
       default:
         throw new Error(`Unkown node type: '${node.type}'`);
@@ -29,7 +29,7 @@ const iterAst = (ast, depth = 0) => {
   };
 
   const res = ast.map((node) => {
-    if (node.type === 'node') {
+    if (node.type === 'nested') {
       return `${spaces(depth)}  ${node.name}: ${iterAst(node.children, depth + 1)}`;
     }
 

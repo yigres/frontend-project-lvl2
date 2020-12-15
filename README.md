@@ -41,5 +41,5 @@ Specify "plain" output format for the difference between the two deep files.
 
 
 Specify "json" output format for the difference between the two deep files.  
-[Asciinema 5](https://asciinema.org/a/378059)
+[Asciinema 5](https://asciinema.org/a/379332)
 ##

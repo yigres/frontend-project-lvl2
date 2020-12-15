@@ -18,7 +18,7 @@ const makeAst = (object1, object2) => {
     if (_.isPlainObject(object1[key]) && _.isPlainObject(object2[key])) {
       return {
         name: key,
-        type: 'node',
+        type: 'nested',
         children: makeAst(object1[key], object2[key]),
       };
     }
@@ -26,24 +26,21 @@ const makeAst = (object1, object2) => {
       return {
         name: key,
         type: 'equal',
-        oldValue: object1[key],
-        newValue: object2[key],
+        value: object1[key],
       };
     }
     if (!_.has(object2, key)) {
       return {
         name: key,
         type: 'removed',
-        oldValue: object1[key],
-        newValue: '',
+        value: object1[key],
       };
     }
     if (!_.has(object1, key)) {
       return {
         name: key,
         type: 'added',
-        oldValue: '',
-        newValue: object2[key],
+        value: object2[key],
       };
     }
     return {

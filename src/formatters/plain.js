@@ -15,7 +15,7 @@ const iterAst = (ast, path = '') => {
       case 'equal':
         return '';
       case 'added':
-        return `Property '${newPath(node.name)}' was added with value: ${formatValue(node.newValue)}`;
+        return `Property '${newPath(node.name)}' was added with value: ${formatValue(node.value)}`;
       case 'removed':
         return `Property '${newPath(node.name)}' was removed`;
       case 'updated':
@@ -26,7 +26,7 @@ const iterAst = (ast, path = '') => {
   };
 
   const res = ast.map((node) => {
-    if (node.type === 'node') {
+    if (node.type === 'nested') {
       return iterAst(node.children, newPath(node.name));
     }
 
