@@ -2,7 +2,7 @@ import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
-import format from './formatters/index';
+import format from './formatters/index.js';
 
 const mapping = {
   '.yml': yaml.safeLoad,

@@ -1,10 +1,10 @@
 import { test, expect } from '@jest/globals';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
-import gendiff from '../src/index';
-import expected1 from '../__fixtures__/expected_file1';
-import expected2 from '../__fixtures__/expected_file2';
-import expected3 from '../__fixtures__/expected_file3';
+import gendiff from '../src/index.js';
+import expected1 from '../__fixtures__/expected_file1.js';
+import expected2 from '../__fixtures__/expected_file2.js';
+import expected3 from '../__fixtures__/expected_file3.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
