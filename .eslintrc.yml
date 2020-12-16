@@ -13,9 +13,3 @@ rules:
   - allow:
     - __filename
     - __dirname
-  import/extensions:
-  - error
-  - ignorePackages
-  - js: always
-    mjs: always
-    jsx: always
