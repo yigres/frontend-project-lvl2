@@ -1,9 +1,9 @@
-name: hexlet-check
+name: frontend-project-lvl2
 
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
