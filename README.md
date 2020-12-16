@@ -7,7 +7,7 @@ Calculates the difference between two json / yml files.
 [![gendiff CI](https://github.com/yigres/frontend-project-lvl2/workflows/gendiff%20CI/badge.svg)](https://github.com/yigres/frontend-project-lvl2/actions) 
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/yigres/frontend-project-lvl2)](https://codeclimate.com/github/yigres/frontend-project-lvl2/maintainability) 
 [![Test Coverage](https://img.shields.io/codeclimate/coverage/yigres/frontend-project-lvl2)](https://codeclimate.com/github/yigres/frontend-project-lvl2/test_coverage) 
-![hexlet-check](https://github.com/yigres/frontend-project-lvl2/workflows/hexlet-check/badge.svg)
+[![hexlet-check](https://github.com/yigres/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/yigres/frontend-project-lvl2/actions?query=workflow%3Ahexlet-check)
 ## Setup       
 ```sh
 $ make install
