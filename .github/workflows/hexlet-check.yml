@@ -1,4 +1,4 @@
-name: frontend-project-lvl2
+name: hexlet-check
 
 on:
   push:
