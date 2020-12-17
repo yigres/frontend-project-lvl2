@@ -1,15 +1,17 @@
 import { test, expect } from '@jest/globals';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
+import fs from 'fs';
 import gendiff from '../src/index.js';
-import expected1 from '../__fixtures__/expected_file1.js';
-import expected2 from '../__fixtures__/expected_file2.js';
-import expected3 from '../__fixtures__/expected_file3.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const getFixturePath = (filename, extension) => path.join(__dirname, '..', '__fixtures__', `${filename}.${extension}`);
+
+const expected1 = fs.readFileSync(getFixturePath('expected_file1', 'txt'), 'utf8');
+const expected2 = fs.readFileSync(getFixturePath('expected_file2', 'txt'), 'utf8');
+const expected3 = fs.readFileSync(getFixturePath('expected_file3', 'txt'), 'utf8');
 
 const testArray = [
   ['stylish', 'json', 'file5', 'file6', expected1],

@@ -13,15 +13,15 @@ const iterAst = (ast, depth = 0) => {
   const render = (node) => {
     switch (node.type) {
       case 'equal':
-        return `${spaces(depth)}  ${node.name}: ${renderValue(node.value, depth)}`.trimRight();
+        return `${spaces(depth)}  ${node.name}: ${renderValue(node.value, depth)}`;
       case 'added':
-        return `${spaces(depth)}+ ${node.name}: ${renderValue(node.value, depth)}`.trimRight();
+        return `${spaces(depth)}+ ${node.name}: ${renderValue(node.value, depth)}`;
       case 'removed':
-        return `${spaces(depth)}- ${node.name}: ${renderValue(node.value, depth)}`.trimRight();
+        return `${spaces(depth)}- ${node.name}: ${renderValue(node.value, depth)}`;
       case 'updated':
         return [
-          `${spaces(depth)}- ${node.name}: ${renderValue(node.oldValue, depth)}`.trimRight(),
-          `\n${spaces(depth)}+ ${node.name}: ${renderValue(node.newValue, depth)}`.trimRight(),
+          `${spaces(depth)}- ${node.name}: ${renderValue(node.oldValue, depth)}`,
+          `\n${spaces(depth)}+ ${node.name}: ${renderValue(node.newValue, depth)}`,
         ].join('');
       default:
         throw new Error(`Unkown node type: '${node.type}'`);

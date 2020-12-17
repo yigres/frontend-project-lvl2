@@ -1,4 +1,4 @@
-const expected = `{
+{
     common: {
       + follow: false
         setting1: Value 1
@@ -11,7 +11,7 @@ const expected = `{
         }
         setting6: {
             doge: {
-              - wow:
+              - wow: 
               + wow: so much
             }
             key: value
@@ -41,6 +41,4 @@ const expected = `{
             }
         }
     }
-}`;
-
-export default expected;
+}
