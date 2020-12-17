@@ -20,6 +20,7 @@ const testArray = [
   ['plain', 'yml', 'file7', 'file8', expected2],
   ['json', 'json', 'file5', 'file6', expected3],
   ['json', 'yml', 'file7', 'file8', expected3],
+  [undefined, 'json', 'file5', 'file6', expected1],
 ];
 
 test.concurrent.each(testArray)('generate "%s" format difference for two deep %s files', async (outputFormat, filesFormat, fileName1, fileName2, expected) => {
