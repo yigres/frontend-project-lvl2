@@ -1,4 +1,8 @@
 const iterAst = (ast, path = '') => {
+  const newPath = (value) => (path === ''
+    ? value
+    : `${path}.${value}`);
+
   const toString = (value) => {
     if (value && typeof value === 'object') {
       return '[complex value]';
@@ -6,11 +10,11 @@ const iterAst = (ast, path = '') => {
     return (typeof (value) === 'string' ? `'${value}'` : value);
   };
 
-  const newPath = (value) => (path === ''
-    ? value
-    : `${path}.${value}`);
+  const res = ast.map((node) => {
+    if (node.type === 'nested') {
+      return iterAst(node.children, newPath(node.name));
+    }
 
-  const render = (node) => {
     switch (node.type) {
       case 'equal':
         return '';
@@ -23,14 +27,6 @@ const iterAst = (ast, path = '') => {
       default:
         throw new Error(`Unkown node type: '${node.type}'`);
     }
-  };
-
-  const res = ast.map((node) => {
-    if (node.type === 'nested') {
-      return iterAst(node.children, newPath(node.name));
-    }
-
-    return render(node);
   }).filter(Boolean).join('\n');
 
   return res;
