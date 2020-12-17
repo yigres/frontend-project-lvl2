@@ -3,6 +3,8 @@ install:
 
 publish:
 	npm publish --dry-run
+
+genDiff:
 	npm link
 		
 test:

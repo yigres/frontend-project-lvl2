@@ -11,6 +11,7 @@ Calculates the difference between two json / yml files.
 ```sh
 $ make install
 $ make publish
+$ make genDiff
 ```    
 
 run the following NPM script to run test 
