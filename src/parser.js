@@ -1,8 +1,8 @@
 import yaml from 'js-yaml';
 
 const mapping = {
-  '.yml': yaml.safeLoad,
-  '.json': JSON.parse,
+  yaml: yaml.safeLoad,
+  json: JSON.parse,
 };
 
 const parse = (data, fileFormat) => mapping[fileFormat](data);
