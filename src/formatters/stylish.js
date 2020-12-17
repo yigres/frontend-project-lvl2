@@ -1,8 +1,8 @@
 const spaces = (count = 0) => ' '.repeat(count * 4 + 2);
 
-const renderValue = (value, depth) => {
+const toString = (value, depth) => {
   if (value && typeof value === 'object') {
-    const res = Object.keys(value).map((key) => `\n${spaces(depth + 1)}  ${key}: ${renderValue(value[key], depth + 1)}`).join('');
+    const res = Object.keys(value).map((key) => `\n${spaces(depth + 1)}  ${key}: ${toString(value[key], depth + 1)}`).join('');
     return `{${res}\n${' '.repeat((depth + 1) * 4)}}`;
   }
 
@@ -13,15 +13,15 @@ const iterAst = (ast, depth = 0) => {
   const render = (node) => {
     switch (node.type) {
       case 'equal':
-        return `${spaces(depth)}  ${node.name}: ${renderValue(node.value, depth)}`;
+        return `${spaces(depth)}  ${node.name}: ${toString(node.value, depth)}`;
       case 'added':
-        return `${spaces(depth)}+ ${node.name}: ${renderValue(node.value, depth)}`;
+        return `${spaces(depth)}+ ${node.name}: ${toString(node.value, depth)}`;
       case 'removed':
-        return `${spaces(depth)}- ${node.name}: ${renderValue(node.value, depth)}`;
+        return `${spaces(depth)}- ${node.name}: ${toString(node.value, depth)}`;
       case 'updated':
         return [
-          `${spaces(depth)}- ${node.name}: ${renderValue(node.oldValue, depth)}`,
-          `\n${spaces(depth)}+ ${node.name}: ${renderValue(node.newValue, depth)}`,
+          `${spaces(depth)}- ${node.name}: ${toString(node.oldValue, depth)}`,
+          `\n${spaces(depth)}+ ${node.name}: ${toString(node.newValue, depth)}`,
         ].join('');
       default:
         throw new Error(`Unkown node type: '${node.type}'`);
