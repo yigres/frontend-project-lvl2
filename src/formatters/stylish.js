@@ -1,38 +1,56 @@
-const spaces = (count = 0) => ' '.repeat(count * 4 + 2);
+const currentIndent = (depth) => {
+  const indentSize = 4 * (depth) + 2;
+  return ' '.repeat(indentSize);
+};
+
+const bracketIndent = (depth) => {
+  const indentSize = 4 * depth;
+  return ' '.repeat(indentSize);
+};
 
 const toString = (value, depth) => {
   if (value && typeof value === 'object') {
-    const res = Object.keys(value).map((key) => `\n${spaces(depth + 1)}  ${key}: ${toString(value[key], depth + 1)}`).join('');
-    return `{${res}\n${' '.repeat((depth + 1) * 4)}}`;
+    const lines = Object.keys(value)
+      .map((key) => `${currentIndent(depth)}  ${key}: ${toString(value[key], depth + 1)}`);
+    return [
+      '{',
+      ...lines,
+      `${bracketIndent(depth)}}`,
+    ].join('\n');
   }
 
   return value;
 };
 
-const iterAst = (ast, depth = 0) => {
-  const res = ast.map((node) => {
-    if (node.type === 'nested') {
-      return `${spaces(depth)}  ${node.name}: ${iterAst(node.children, depth + 1)}`;
-    }
+const iterAst = (ast) => {
+  const iter = (data, depth) => {
+    const lines = data.map((node) => {
+      switch (node.type) {
+        case 'equal':
+          return `${currentIndent(depth)}  ${node.name}: ${toString(node.value, depth + 1)}`;
+        case 'added':
+          return `${currentIndent(depth)}+ ${node.name}: ${toString(node.value, depth + 1)}`;
+        case 'removed':
+          return `${currentIndent(depth)}- ${node.name}: ${toString(node.value, depth + 1)}`;
+        case 'updated':
+          return [
+            `${currentIndent(depth)}- ${node.name}: ${toString(node.oldValue, depth + 1)}`,
+            `${currentIndent(depth)}+ ${node.name}: ${toString(node.newValue, depth + 1)}`,
+          ].join('\n');
+        case 'nested':
+          return `${currentIndent(depth)}  ${node.name}: ${iter(node.children, depth + 1)}`;
+        default:
+          throw new Error(`Unkown node type: '${node.type}'`);
+      }
+    });
+    return [
+      '{',
+      ...lines,
+      `${bracketIndent(depth)}}`,
+    ].join('\n');
+  };
 
-    switch (node.type) {
-      case 'equal':
-        return `${spaces(depth)}  ${node.name}: ${toString(node.value, depth)}`;
-      case 'added':
-        return `${spaces(depth)}+ ${node.name}: ${toString(node.value, depth)}`;
-      case 'removed':
-        return `${spaces(depth)}- ${node.name}: ${toString(node.value, depth)}`;
-      case 'updated':
-        return [
-          `${spaces(depth)}- ${node.name}: ${toString(node.oldValue, depth)}`,
-          `\n${spaces(depth)}+ ${node.name}: ${toString(node.newValue, depth)}`,
-        ].join('');
-      default:
-        throw new Error(`Unkown node type: '${node.type}'`);
-    }
-  }).join('\n');
-
-  return `{\n${res}\n${' '.repeat(depth * 4)}}`;
+  return iter(ast, 0);
 };
 
 export default iterAst;
