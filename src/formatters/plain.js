@@ -1,6 +1,6 @@
 const iterAst = (ast, path = '') => {
   const renderValue = (value) => {
-    if (value instanceof Object) {
+    if (value && typeof value === 'object') {
       return '[complex value]';
     }
     return (typeof (value) === 'string' ? `'${value}'` : value);

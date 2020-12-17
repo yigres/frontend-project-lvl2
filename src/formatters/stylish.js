@@ -1,7 +1,7 @@
 const spaces = (count = 0) => ' '.repeat(count * 4 + 2);
 
 const renderValue = (value, depth) => {
-  if (value instanceof Object) {
+  if (value && typeof value === 'object') {
     const res = Object.keys(value).map((key) => `\n${spaces(depth + 1)}  ${key}: ${renderValue(value[key], depth + 1)}`).join('');
     return `{${res}\n${' '.repeat((depth + 1) * 4)}}`;
   }
