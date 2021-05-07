@@ -13,9 +13,8 @@ Utility features:
 * Generating a report in formats: plain text, stylish, json
 * The package can be used as a library  
   
-<!-- ## gendiff.js   -->
-## Usage as console utility
----
+## Usage as console utility  
+
 ### Installation  
 ```sh
 $ git clone git@github.com:yigres/frontend-project-lvl2.git
@@ -36,8 +35,8 @@ $ gendiff --format plain path/to/file.yml another/path/file.json
 # stylish format output
 $ gendiff filepath1.json filepath2.json
 ```
-## Usage as library
----
+## Usage as library  
+
 ### Installation  
 ```sh
 $ git clone git@github.com:yigres/frontend-project-lvl2.git
@@ -75,8 +74,8 @@ console.log(plainOutput); // =>
 // Property 'group1.baz' was updated. From 'bas' to 'bars'
 // Property 'group2' was removed
 ```  
-## Demo
-***
+## Demo  
+
 Runs help and version output.  
 Get the difference of two flat json files.  
 [Asciinema 1](https://asciinema.org/a/374139)  
