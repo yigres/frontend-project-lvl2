@@ -41,7 +41,11 @@ $ gendiff filepath1.json filepath2.json
 ```sh
 $ git clone git@github.com:yigres/frontend-project-lvl2.git
 $ cd frontend-project-lvl2
-$ npm pack 
+$ npm pack  
+$ cp hexlet-code-1.1.4.tgz /path/to/dir  
+$ cd /path/to/dir
+$ install hexlet-code-1.1.4.tgz
+
 ```
 ### Usage  
 ```js
